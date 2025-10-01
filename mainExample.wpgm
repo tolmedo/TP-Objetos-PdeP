@@ -14,6 +14,27 @@ program pepitaGame {
 	game.addVisualCharacter(pepito)
 
 	//
+	game.onCollideDo(pepito, { elemento =>
+    elemento.colisionarCon(pepito)
+  })
+	// Cada Tick acercar obstáculos
+  game.onTick(500, "acercarObstaculos", {
+    vasoDeLeche.moverse()
+  })
+  
+  //Mover personaje para arriba y para abajo al tocar
+  keyboard.w().onPressDo(
+    {
+      pepito.irArriba()
+        }
+  )
+
+  keyboard.s().onPressDo(
+    {
+      pepito.irAbajo()
+        }
+  )
+
 
 	game.showAttributes(pepito) //Debug
 
