@@ -1,23 +1,21 @@
 import wollok.game.*
 
 object vasoDeLeche {
-  var property position =  10 //TODO Revisar posición inicial
-  var property position1 = game.at(3,5)
+  var property position = game.at(8,3)
 
-    method image() = "vaso-de-leche.png"
+    method image() = "vasoDeLeche.png"
 
     method colisionarCon(galletita) {
       galletita.chocarseConObstaculo(self)
     }
 
     method moverse(){
-      position.x(position.x()-1)
+      position=position.left(1)
       if(position.x()==0){
-        position.x(10)
-        position.y(1.randomUpTo(3))
+        position = game.at(8,1.randomUpTo(3.9).truncate(0))
       }
     }
-  
+ 
   /*
   var puntaje = 0 
 
