@@ -3,6 +3,6 @@ import wollok.game.*
 
 
 program pepitaGame {
-	juegoPepitosSweetRescue.iniciar()
+	juegoPepitosSweetRescue.menu()
 	game.start()
 }

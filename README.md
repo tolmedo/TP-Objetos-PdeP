@@ -11,3 +11,15 @@ b. Por La Tercera
 c. Viaje Espacial
    
 Una pequeña nave espacial viaja por el vacío, esquivando a toda velocidad los asteroides que aparecen sin descanso. Con disparos certeros, logra destruir algunos obstáculos y abrirse camino entre la lluvia de rocas. Cada segundo de supervivencia se convierte en un desafío que combina reflejos rápidos y puntería precisa.
+
+
+TODO:
+- Forma de ganar
+- Más lento
+- Arreglar reiniciar
+- Test
+- Diagrama
+
+Extra: 
+- Power-up
+- Pantalla de inicio
