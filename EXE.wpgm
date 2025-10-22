@@ -1,0 +1,8 @@
+import PepitosSweetRescue.*
+import wollok.game.*
+
+
+program pepitaGame {
+	juegoPepitosSweetRescue.iniciar()
+	game.start()
+}

@@ -1,7 +1,7 @@
 import wollok.game.*
 
 object vasoDeLeche {
-  var property position = game.at(8,3)
+  var property position = game.at(game.width(),3)
 
     method image() = "vasoDeLeche.png"
 
@@ -12,7 +12,7 @@ object vasoDeLeche {
     method moverse(){
       position=position.left(1)
       if(position.x()==0){
-        position = game.at(8,1.randomUpTo(3.9).truncate(0))
+        position = game.at(game.width(),1.randomUpTo(3.9).truncate(0))
       }
     }
  

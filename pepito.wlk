@@ -1,7 +1,11 @@
 import wollok.game.*
+import gameOver.*
+import PepitosSweetRescue.*
+
 
 object pepito {
-  var property position =  game.at(1,2) //TODO Revisar posición inicial
+  var property position = game.at(1,2) // Posición inicial
+  var vidas = 3
   /*
   var puntaje = 0 
 
@@ -13,12 +17,20 @@ object pepito {
   }
   */
   method chocarseConObstaculo(obstaculo){
+    if(vidas > 1) { 
+      vidas -= 1  
+      game.say(self, "Ouch")
+    } else {
+      juegoPepitosSweetRescue.perder()
+    } 
+  
     /*game.removeVisual(obstaculo)
     */
-    game.say(self, "Ouch")
-    // TODO: Agregar consecuencias (morir / tomar daño)
   }
   
+  method vidasIniciales(){
+    vidas = 3
+  }
   //Pepito se mueve de 3 a 1 en y
 
   method irArriba(){
