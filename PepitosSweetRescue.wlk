@@ -11,11 +11,10 @@ object juegoPepitosSweetRescue{
     game.title("Pepito´s Sweet Rescue")
 	  game.height(10)
 	  game.width(10)
-	
-	  // Agregar a los elementos visuales
-    game.boardGround("cocina.png")
-	  game.addVisual(vasoDeLeche)
-    obstaculos.add(vasoDeLeche) //Prueba
+    game.boardGround("backgroundPepito.png")
+    const nuevoVaso = new ObstaculoHorizontal()
+    obstaculos.add(nuevoVaso)
+    game.addVisual(nuevoVaso)
 	  game.addVisual(pepito)
     //dar vidas a pepito
 	  //
@@ -34,6 +33,12 @@ object juegoPepitosSweetRescue{
       game.addVisual(nuevoObstaculo)
     })
     */
+     //Prueba
+    game.onTick(500, "agregarLeche",{
+      const nuevoObstaculo = new ObstaculoHorizontal()
+      obstaculos.add(nuevoObstaculo)
+      game.addVisual(nuevoObstaculo)
+    })
   
     //Mover personaje para arriba y para abajo al tocar
     keyboard.w().onPressDo(
@@ -46,9 +51,9 @@ object juegoPepitosSweetRescue{
   }
 
   method perder(){
-    game.boardGround("gameOver.png")
+    game.addVisual("gameOver.png")
     game.removeTickEvent("acercarObstaculos")
-    //game.removeTickEvent("agregarObstaculo")
+    game.removeTickEvent("agregarObstaculo")
     game.removeVisual(vasoDeLeche)
     obstaculos.forEach({objeto => game.removeVisual(objeto)})
     game.removeVisual(pepito)
@@ -67,10 +72,8 @@ object juegoPepitosSweetRescue{
     game.clear()
     game.stop()
   }
-  
-  /*
-  method clear(){
-
+  method sacarA(obstaculoASacar){
+    obstaculos.remove(obstaculoASacar)
   }
-  */
+  
 }
