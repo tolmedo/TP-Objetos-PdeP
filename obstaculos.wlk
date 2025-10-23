@@ -2,7 +2,7 @@ import wollok.game.*
 import PepitosSweetRescue.*
 
 class ObstaculoHorizontal{
-  var property position = game.at(game.width(),1.randomUpTo(3.99).truncate(0))
+  var property position = game.at(game.width(),2.randomUpTo(4.99).truncate(0))
 
   method image() = "vasoDeLeche.png"
 

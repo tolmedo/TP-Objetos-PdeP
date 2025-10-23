@@ -14,12 +14,9 @@ Una pequeña nave espacial viaja por el vacío, esquivando a toda velocidad los 
 
 
 TODO:
-- Forma de ganar
-- Más lento
 - Arreglar reiniciar
-- Test
-- Diagrama
+- Test (Shei)
+- Diagrama (Thiago)
 
 Extra: 
 - Power-up
-- Pantalla de inicio

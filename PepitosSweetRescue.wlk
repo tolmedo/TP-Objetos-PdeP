@@ -1,33 +1,35 @@
 import wollok.game.*
-import textos.*
 import pepito.*
 import vasoDeLeche.*
 import obstaculos.*
 import fondo.*
+import contador.*
+
 
 object juegoPepitosSweetRescue{
+
   method menu(){
     game.title("Pepito´s Sweet Rescue")
     game.height(10)
 	  game.width(10)
-    game.boardGround("backgroundPepito.png")
-    game.addVisual(textoMenu)
-	  // fondo.imagenActual = "menuPrincipal.png"
-
+	  fondo.ponerFondoMenu()
     keyboard.enter().onPressDo({self.iniciar()})
-    
+  
   }
 
   const obstaculos=[]
   var puntos = 0
   
   method iniciar(){
-    game.removeVisual(textoMenu)
-    //game.boardGround("backgroundPepito.png")
+    puntos=0
+    
+    fondo.ponerFondoJuego()
+    
     const nuevoVaso = new ObstaculoHorizontal()
     obstaculos.add(nuevoVaso)
     game.addVisual(nuevoVaso)
 	  game.addVisual(pepito)
+    game.addVisual(contador)
     //dar vidas a pepito
     pepito.vidasIniciales()
 	  //
@@ -49,6 +51,7 @@ object juegoPepitosSweetRescue{
     game.onTick(500, "sumarPuntos",{
       if (puntos<6000){
         puntos += 50
+        contador.puntaje(puntos)
       }
       else{
         self.ganar()
@@ -59,15 +62,14 @@ object juegoPepitosSweetRescue{
     keyboard.w().onPressDo({pepito.irArriba()})
     keyboard.s().onPressDo({pepito.irAbajo()})
 	  //game.showAttributes(pepito) //Debug
-    /*
-    keyboard.r().onPressDo({ self.reiniciar() })
-    keyboard.q().onPressDo({ self.cerrar() })
-    */
+    
+    // keyboard.r().onPressDo({ self.reiniciar() })
+    
   }
 
   method perder(){
-    //fondo.ponerFondoGanar()
-    game.addVisual(textoMuerte)
+    fondo.ponerFondoGameOver()
+    keyboard.q().onPressDo({ self.menu() })
     self.terminar()
   }
 /*
@@ -78,8 +80,7 @@ object juegoPepitosSweetRescue{
 */
   //Por ahora solo gana, para la próxima entrega cambiar de modo (salto, vertical, etc)
   method ganar(){
-    // fondo.ponerFondoGanar()
-    game.addVisual(textoGanar)
+    fondo.ponerFondoGanar()
     self.terminar()
   }
   
@@ -87,16 +88,14 @@ object juegoPepitosSweetRescue{
     
     game.removeTickEvent("acercarObstaculos")
     game.removeTickEvent("agregarObstaculo")
+    game.removeTickEvent("sumarPuntos")
     //game.removeVisual(vasoDeLeche)
+    //obstaculos.forEach({objeto => {game.removeVisual(objeto) self.sacarA(objeto)}})
     obstaculos.forEach({objeto => game.removeVisual(objeto)})
     game.removeVisual(pepito)
+
   }
-/*
-  method cerrar(){
-    game.clear()
-    game.stop()
-  }
-  */
+
   method sacarA(obstaculoASacar){
     obstaculos.remove(obstaculoASacar)
   }

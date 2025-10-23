@@ -1,9 +1,23 @@
-import example.pepita
+import PepitosSweetRescue.*
+import pepito.*
 
-describe "group of tests for pepita" {
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+describe "Pruebas de la primer parte" {
+
+  test "La cantidad de puntos cumple con la condicion de ganar" {
+    juegoPepitosSweetRescue.ganar()
+    assert.equals(6000,juegoPepitosSweetRescue.puntos)
   }
 
+  test "La cantidad de vidas cumple con la condicion de perder" {
+    juegoPepitosSweetRescue.perder()
+    assert.equals(0,pepito.vidas)
+  }
+
+  /*
+  test "colision" {
+    juegoPepitosSweetRescue.menu()
+    assert.equals(6000,juegoPepitosSweetRescue.puntos)
+  }
+  */
 }

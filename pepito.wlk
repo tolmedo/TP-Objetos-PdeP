@@ -32,24 +32,15 @@ object pepito {
   //Pepito se mueve de 3 a 1 en y
 
   method irArriba(){
-    if (position.y()<3){
+    if (position.y()<4){
       position=position.up(1)
     }
   }
   method irAbajo(){
-    /*
-    if (position.y()!=1){
-      position.y(position.y()-1)
-    }const rojo = "FF0000FF"
-    method position() = game.at(game.center().x(), game.center().y() - 3)
-    method text() = "Ganaste: R - reiniciar  |  Q - salir"
-    method textColor() = rojo
-}
-    */
-    if (position.y()>1){
+    if (position.y()>2){
     position = position.down(1)
     }
     
   }
-  method image() = "pepito.png"
+  method image() = "newPepito.png"
 }
