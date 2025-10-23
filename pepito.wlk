@@ -3,8 +3,9 @@ import PepitosSweetRescue.*
 
 
 object pepito {
+  
   var property position = game.at(1,2) // Posición inicial
-  var vidas = 0 //Luego cambiar a 3
+  var vidas = 3 
   /*
   var puntaje = 0 
 
@@ -15,19 +16,20 @@ object pepito {
     puntaje += chispita.puntajeChip()
   }
   */
+  method image() = "newPepito.png"
+
   method chocarseConObstaculo(obstaculo){
-    if(vidas > 1) { 
-      vidas -= 1  
+    vidas -= 1
+    if(vidas > 0) {  
       game.say(self, "Ouch")
     } else {
-      game.say(self, "Me mori") //Prueba
       juegoPepitosSweetRescue.perder()
     } 
   
   }
   
   method vidasIniciales(){
-    vidas = 10 //Luego cambiar a 3
+    vidas = 3 
   }
   //Pepito se mueve de 3 a 1 en y
 
@@ -42,5 +44,8 @@ object pepito {
     }
     
   }
-  method image() = "newPepito.png"
+
+  method getVidas()=vidas
+
+  
 }

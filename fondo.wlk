@@ -24,7 +24,7 @@ object fondo {
     }
     
     method ponerFondoGanar() { 
-        imagenActual = "ganaste.png" // falta foto
+        imagenActual = "ganastePepito.png"
         self.actualizarFondo()
     }
     

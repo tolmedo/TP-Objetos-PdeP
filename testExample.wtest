@@ -1,23 +1,50 @@
 import PepitosSweetRescue.*
 import pepito.*
+import obstaculos.*
 
 
 describe "Pruebas de la primer parte" {
 
-  test "La cantidad de puntos cumple con la condicion de ganar" {
-    juegoPepitosSweetRescue.ganar()
-    assert.equals(6000,juegoPepitosSweetRescue.puntos)
+  test "Pepito esta dentro de las posiciones permitidas: ir arriba" {
+    
+    pepito.irArriba()
+    pepito.irArriba()
+    pepito.irArriba()
+
+    assert.equals(game.at(1,4),pepito.position()) 
+  
+  }
+
+  test "Pepito esta dentro de las posiciones permitidas: ir abajo" {
+    
+    pepito.irAbajo()
+    pepito.irAbajo()
+    pepito.irAbajo()
+
+    assert.equals(game.at(1,2),pepito.position()) 
   }
 
   test "La cantidad de vidas cumple con la condicion de perder" {
-    juegoPepitosSweetRescue.perder()
-    assert.equals(0,pepito.vidas)
+  juegoPepitosSweetRescue.iniciar()
+  const obstaculo1 = new ObstaculoHorizontal()
+  pepito.chocarseConObstaculo(obstaculo1)
+  pepito.chocarseConObstaculo(obstaculo1)
+  pepito.chocarseConObstaculo(obstaculo1)
+
+  assert.equals(0, pepito.getVidas())
   }
 
-  /*
-  test "colision" {
-    juegoPepitosSweetRescue.menu()
-    assert.equals(6000,juegoPepitosSweetRescue.puntos)
+    test "Una colision resta una vida" {
+    juegoPepitosSweetRescue.iniciar()
+    const obstaculo1 = new ObstaculoHorizontal()
+    pepito.chocarseConObstaculo(obstaculo1)
+
+    // comprobar directamente la propiedad
+    assert.equals(2, pepito.getVidas())
   }
-  */
+  test "Vidas iniciales son 3" {
+    juegoPepitosSweetRescue.iniciar()
+    assert.equals(3, pepito.getVidas())
+  }
+
 }
