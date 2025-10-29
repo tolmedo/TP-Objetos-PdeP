@@ -30,6 +30,7 @@ object juegoPepitosSweetRescue{
     game.addVisual(nuevoVaso)
 	  game.addVisual(pepito)
     game.addVisual(contador)
+    game.addVisual(contVidas)
     //dar vidas a pepito
     pepito.vidasIniciales()
 	  //
@@ -43,7 +44,18 @@ object juegoPepitosSweetRescue{
     })
     
     game.onTick(500, "agregarObstaculo",{
-      const nuevoObstaculo = new ObstaculoHorizontal()
+      var nuevoObstaculo
+      const numRandom =0.randomUpTo(20)
+      if (numRandom<19){
+        if(numRandom<10){
+          nuevoObstaculo = new ObstaculoHorizontal()
+        }else{
+          nuevoObstaculo = new Manzana()
+        }
+      }else {
+        nuevoObstaculo = new Chocolate()
+      }
+      
       obstaculos.add(nuevoObstaculo)
       game.addVisual(nuevoObstaculo)
     })

@@ -3,16 +3,16 @@ import PepitosSweetRescue.*
 
 class ObstaculoHorizontal{
   var property position = game.at(game.width(),2.randomUpTo(4.99).truncate(0))
-
+  const daño = 1
   method image() = "vasoDeLeche.png"
 
   method colisionarCon(galletita) {
-    galletita.chocarseConObstaculo(self)
+    galletita.chocarseConObstaculo(daño)
   }
 
   method moverse(){
     position=position.left(1)
-    if(position.x()==0){
+    if(position.x()<=0){
       //position = game.at(game.width(),1.randomUpTo(3.9).truncate(0))
       juegoPepitosSweetRescue.sacarA(self)
       game.removeVisual(self)
@@ -21,6 +21,23 @@ class ObstaculoHorizontal{
     }
 }
 
+class Chocolate inherits ObstaculoHorizontal(daño=-1){
+  override method image() = "chocolate.png"
+}
+
+class Manzana inherits ObstaculoHorizontal(){
+  override method image()= "manzana.png"
+  override method moverse(){
+    position=position.left(1)
+    game.schedule(250,{position=position.left(1)})
+    if(position.x()<=0){
+      //position = game.at(game.width(),1.randomUpTo(3.9).truncate(0))
+      juegoPepitosSweetRescue.sacarA(self)
+      game.removeVisual(self)
+      
+     }
+  }
+}
 /*
 class VasoDeLeche{ var imagen= "vasoDeLeche.png" }
 class Plato{}

@@ -1,5 +1,6 @@
 import wollok.game.*
 import PepitosSweetRescue.*
+import contador.*
 
 
 object pepito {
@@ -18,10 +19,15 @@ object pepito {
   */
   method image() = "newPepito.png"
 
-  method chocarseConObstaculo(obstaculo){
-    vidas -= 1
+  method chocarseConObstaculo(daño){
+    vidas -=daño
+    contVidas.cantVidas(vidas)
     if(vidas > 0) {  
-      game.say(self, "Ouch")
+      if (daño>0){
+        game.say(self, "Ouch")
+      }else{
+        game.say(self, "Yum")
+      }
     } else {
       juegoPepitosSweetRescue.perder()
     } 
