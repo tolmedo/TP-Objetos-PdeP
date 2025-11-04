@@ -18,10 +18,10 @@ object juegoPepitosSweetRescue{
   }
 
   const obstaculos=[]
-  var puntos = 0
+  var puntos = 6000
   
   method iniciar(){
-    puntos=0
+    puntos = 6000
     
     fondo.ponerFondoJuego()
     
@@ -59,10 +59,20 @@ object juegoPepitosSweetRescue{
       obstaculos.add(nuevoObstaculo)
       game.addVisual(nuevoObstaculo)
     })
-
+/*
     game.onTick(500, "sumarPuntos",{
       if (puntos<6000){
         puntos += 50
+        contador.puntaje(puntos)
+      }
+      else{
+        self.ganar()
+      }
+    })
+*/
+  game.onTick(500, "restarDistancia",{
+      if (puntos>0){
+        puntos -= 50
         contador.puntaje(puntos)
       }
       else{
@@ -75,7 +85,7 @@ object juegoPepitosSweetRescue{
     keyboard.s().onPressDo({pepito.irAbajo()})
 	  //game.showAttributes(pepito) //Debug
     
-    // keyboard.r().onPressDo({ self.reiniciar() })
+    keyboard.r().onPressDo({ self.reiniciar() })
     
   }
 
@@ -84,12 +94,19 @@ object juegoPepitosSweetRescue{
     keyboard.q().onPressDo({ self.menu() })
     self.terminar()
   }
-/*
-  method reiniciar(){
+
+method reiniciar(){
+    self.terminar()
+    game.clear()
+    obstaculos.clear()
+    puntos = 6000
+    contador.puntaje(6000)
+
+    pepito.vidasIniciales() 
+    
     self.iniciar()
-    pepito.vidasIniciales()
-  }
-*/
+}
+
   //Por ahora solo gana, para la próxima entrega cambiar de modo (salto, vertical, etc)
   method ganar(){
     fondo.ponerFondoGanar()
@@ -113,5 +130,5 @@ object juegoPepitosSweetRescue{
   }
   
 
- 
+
 }

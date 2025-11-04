@@ -11,7 +11,7 @@ object vasoDeLeche {
 
     method moverse(){
       position=position.left(1)
-      if(position.x()==0){
+      if(position.x()==-1){
         position = game.at(game.width(),1.randomUpTo(3.9).truncate(0))
       }
     }
@@ -26,6 +26,6 @@ object vasoDeLeche {
     puntaje += chispita.puntajeChip()
   }
   */
-  
+
   //method image() = "pepito.png"
 }

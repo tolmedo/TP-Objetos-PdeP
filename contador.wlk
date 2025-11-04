@@ -1,7 +1,16 @@
+/*
 object contador {
   var property puntaje = 0
   var property position = game.at(game.width()-3, game.height()-3)
   method text()= "Puntos : " + puntaje.toString()
+  method textColor()="000000"
+}
+*/
+
+object contador {
+  var property puntaje = 6000
+  var property position = game.at(game.width()-3, game.height()-3)
+  method text()= "Distancia a Pepita: " + puntaje.toString() + "m"
   method textColor()="000000"
 }
 

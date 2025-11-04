@@ -1,10 +1,11 @@
 import wollok.game.*
 import PepitosSweetRescue.*
 import contador.*
+import obstaculos.*
 
 
 object pepito {
-  
+
   var property position = game.at(1,2) // Posición inicial
   var vidas = 3 
   /*
@@ -20,9 +21,10 @@ object pepito {
   method image() = "newPepito.png"
 
   method chocarseConObstaculo(daño){
-    vidas -=daño
+    vidas -= daño
     contVidas.cantVidas(vidas)
-    if(vidas > 0) {  
+
+    if(vidas > 0) {
       if (daño>0){
         game.say(self, "Ouch")
       }else{
@@ -31,12 +33,14 @@ object pepito {
     } else {
       juegoPepitosSweetRescue.perder()
     } 
-  
+
   }
-  
+
   method vidasIniciales(){
     vidas = 3 
+    contVidas.cantVidas(vidas) 
   }
+
   //Pepito se mueve de 3 a 1 en y
 
   method irArriba(){
@@ -48,10 +52,10 @@ object pepito {
     if (position.y()>2){
     position = position.down(1)
     }
-    
+
   }
 
   method getVidas()=vidas
 
-  
+
 }
