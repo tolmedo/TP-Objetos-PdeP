@@ -31,7 +31,7 @@ object pepito {
         game.say(self, "Yum")
       }
     } else {
-      juegoPepitosSweetRescue.perder()
+      instanciadorDeNiveles.perder()
     } 
 
   }
@@ -52,10 +52,23 @@ object pepito {
     if (position.y()>2){
     position = position.down(1)
     }
+  }
 
+  method irDerecha(){
+    if (position.x()<game.width()-2){
+      position = position.right(1)
+    }
+  }
+  method irIzquierda(){
+    if (position.x()>2){
+      position = position.left(1)
+    }
   }
 
   method getVidas()=vidas
 
+  method posicionarseEnElCentro(){
+    position = game.at(position.x(),3)
+  }
 
 }

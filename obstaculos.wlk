@@ -2,7 +2,7 @@ import wollok.game.*
 import PepitosSweetRescue.*
 
 class ObstaculoHorizontal{
-  var property position = game.at(game.width(),2.randomUpTo(4.99).truncate(0))
+  var property position = game.at(game.width() + 1,2.randomUpTo(4.99).truncate(0))
   const daño = 1
   method image() = "vasoDeLeche.png"
 
@@ -14,7 +14,7 @@ class ObstaculoHorizontal{
     position=position.left(1)
     if(position.x()<=-1){
       //position = game.at(game.width(),1.randomUpTo(3.9).truncate(0))
-      juegoPepitosSweetRescue.sacarA(self)
+      instanciadorDeNiveles.sacarA(self)
       game.removeVisual(self)
 
      }
@@ -32,7 +32,7 @@ class Manzana inherits ObstaculoHorizontal(){
     game.schedule(300,{position=position.left(1)})
     if(position.x()<=0){
       //position = game.at(game.width(),1.randomUpTo(3.9).truncate(0))
-      juegoPepitosSweetRescue.sacarA(self)
+      instanciadorDeNiveles.sacarA(self)
       game.removeVisual(self)
 
      }
