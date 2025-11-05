@@ -1,10 +1,9 @@
 import wollok.game.*
 import pepito.*
-import vasoDeLeche.*
 import obstaculos.*
 
 object fondo {
-    var property imagenActual = "cargando.png" // falta foto
+    var property imagenActual = "cargando.png" 
     method position() = game.origin()
     method image() = imagenActual
     

@@ -1,6 +1,5 @@
 import wollok.game.*
 import pepito.*
-import vasoDeLeche.*
 import obstaculos.*
 import fondo.*
 import contador.*
@@ -49,6 +48,7 @@ class NivelGenerico {
   const listaTicks=[]
   var puntos = 6000
   var nivelActual=1
+  
 
   
   method menu(){
@@ -61,6 +61,7 @@ class NivelGenerico {
   }
 
   method iniciarInterno(){
+    
   }
 
   method perder(){
@@ -75,10 +76,8 @@ class NivelGenerico {
     obstaculos.clear()
     puntos = 6000
     contador.puntaje(6000)
-
-    pepito.vidasIniciales()
     self.iniciarInterno()
-    
+    pepito.vidasIniciales()
     
     //self.iniciar()
 }
@@ -133,30 +132,28 @@ class PrimerNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agreg
     
     fondo.ponerFondoJuego()
     
-    const nuevoVaso = new ObstaculoHorizontal()
+    const nuevoVaso = new VasoDeLeche()
     obstaculos.add(nuevoVaso)
     game.addVisual(nuevoVaso)
 	  game.addVisual(pepito)
     game.addVisual(contador)
     game.addVisual(contVidas)
-    //dar vidas a pepito
-    pepito.vidasIniciales()
-	  //
+    
 	  game.onCollideDo(pepito, { elemento =>
       elemento.colisionarCon(pepito)
     })
 	  // Cada Tick acercar obstáculos
 	
-    game.onTick(150, "acercarObstaculos", {
+    game.onTick(125, "acercarObstaculos", {
       obstaculos.forEach({obstaculo => obstaculo.moverse()})
     })
-    
+    /*
     game.onTick(500, "agregarObstaculo",{
       var nuevoObstaculo
       const numRandom =0.randomUpTo(20)
       if (numRandom<19){
         if(numRandom<10){
-          nuevoObstaculo = new ObstaculoHorizontal()
+          nuevoObstaculo = new VasoDeLeche()
         }else{
           nuevoObstaculo = new Manzana()
         }
@@ -167,6 +164,32 @@ class PrimerNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agreg
       obstaculos.add(nuevoObstaculo)
       game.addVisual(nuevoObstaculo)
     })
+    */
+
+    game.onTick(400, "agregarObstaculo", {
+      var nuevoObstaculo
+      const numRandom =0.randomUpTo(30)
+      if (numRandom<29){
+        if (puntos > 4750){
+         nuevoObstaculo = new VasoDeLeche() 
+        } else if (puntos > 3500){
+         nuevoObstaculo = new Cuchillo() 
+        /*} else if (numRandom < 2){
+          nuevoObstaculo = new Pan()*/
+        } else if (numRandom < 14){
+          nuevoObstaculo = new Cuchillo()
+        } else {
+          nuevoObstaculo = new VasoDeLeche()
+        }
+      }else {
+        nuevoObstaculo = new Chocolate()
+      }
+      obstaculos.add(nuevoObstaculo)
+      game.addVisual(nuevoObstaculo)
+    })
+
+
+
 /*
     game.onTick(500, "sumarPuntos",{
       if (puntos<6000){

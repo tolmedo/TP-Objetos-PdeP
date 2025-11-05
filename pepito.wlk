@@ -23,6 +23,7 @@ object pepito {
   method chocarseConObstaculo(daño){
     vidas -= daño
     contVidas.cantVidas(vidas)
+    
 
     if(vidas > 0) {
       if (daño>0){
