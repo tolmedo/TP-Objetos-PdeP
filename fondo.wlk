@@ -3,10 +3,15 @@ import pepito.*
 import obstaculos.*
 
 object fondo {
-    var property imagenActual = "cargando.png" 
+    var property imagenActual = "" 
     method position() = game.origin()
     method image() = imagenActual
     
+    method ponerFondoLoading() { 
+        imagenActual = "cargando.png"
+        self.actualizarFondo()
+    }
+
     method ponerFondoMenu() { 
         imagenActual = "menuPepito.png"
         self.actualizarFondo()
@@ -26,9 +31,15 @@ object fondo {
         imagenActual = "ganastePepito.png"
         self.actualizarFondo()
     }
+
+    method ponerFondoNivelDos() { 
+        imagenActual = "fondoNivel2.png"
+        self.actualizarFondo()
+    }
     
     method actualizarFondo() {
         game.removeVisual(self)
         game.addVisual(self)
     }
+
 }

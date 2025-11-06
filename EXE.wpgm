@@ -4,6 +4,9 @@ import wollok.game.*
 
 program pepitaGame {
 	//juegoPepitosSweetRescue.menu()
-	instanciadorDeNiveles.iniciar(true)
+	game.title("Pepito´s Sweet Rescue")
+    game.height(10)
+	game.width(10)
+	instanciadorDeNiveles.iniciar(1)
 	game.start()
 }

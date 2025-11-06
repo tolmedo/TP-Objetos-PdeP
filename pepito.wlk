@@ -3,47 +3,44 @@ import PepitosSweetRescue.*
 import contador.*
 import obstaculos.*
 
+class PepitoGeneral{
+  var property position =game.at(0,0)
+  var vidas =3
+  var imagen="newPepito.png"
 
-object pepito {
+  method image() = imagen
 
-  var property position = game.at(1,2) // Posición inicial
-  var vidas = 3 
-  /*
-  var puntaje = 0 
-
-  method puntaje() = puntaje
-
-  method recolectarChispita(chispita){
-    game.removeVisual(chispita)
-    puntaje += chispita.puntajeChip()
+  method imagen(nuevaImagen){
+    imagen=nuevaImagen
   }
-  */
-  method image() = "newPepito.png"
+
+  method getVidas() = vidas
 
   method chocarseConObstaculo(daño){
     vidas -= daño
     contVidas.cantVidas(vidas)
-    
-
-    if(vidas > 0) {
-      if (daño>0){
-        game.say(self, "Ouch")
+      if(vidas > 0) {if (daño>0){
+        imagen = "pepitoGameOver.png"
+        game.schedule(1500, { imagen = "newPepito.png" })
+        // agregar sonido de ugh
       }else{
-        game.say(self, "Yum")
+        imagen = "pepitoFeliz.png"
+        game.schedule(1500, { imagen = "newPepito.png" })
+        // agregar sondio de ñam ñam
       }
     } else {
       instanciadorDeNiveles.perder()
     } 
-
   }
-
   method vidasIniciales(){
     vidas = 3 
     contVidas.cantVidas(vidas) 
   }
 
-  //Pepito se mueve de 3 a 1 en y
+}
 
+object pepitoNivel1 inherits PepitoGeneral(position=game.at(1,2)){
+  //Pepito se mueve de 3 a 1 en y
   method irArriba(){
     if (position.y()<4){
       position=position.up(1)
@@ -55,21 +52,21 @@ object pepito {
     }
   }
 
+}
+
+object pepitoNivel2 inherits PepitoGeneral(position = game.at(game.width()/2,2)){
+  
   method irDerecha(){
-    if (position.x()<game.width()-2){
+    if (position.x()< game.width()/2 + 2){
       position = position.right(1)
     }
   }
+  
   method irIzquierda(){
-    if (position.x()>2){
+    if (position.x()> game.width()/2 - 2){
       position = position.left(1)
     }
   }
 
-  method getVidas()=vidas
-
-  method posicionarseEnElCentro(){
-    position = game.at(position.x(),3)
-  }
 
 }
