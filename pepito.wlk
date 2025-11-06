@@ -6,7 +6,7 @@ import obstaculos.*
 class PepitoGeneral{
   var property position =game.at(0,0)
   var vidas =3
-  var imagen="newPepito.png"
+  var imagen=""
 
   method image() = imagen
 
@@ -37,9 +37,14 @@ class PepitoGeneral{
     contVidas.cantVidas(vidas) 
   }
 
+  
+
 }
 
 object pepitoNivel1 inherits PepitoGeneral(position=game.at(1,2)){
+
+  override method image() = "newPepito.png"
+
   //Pepito se mueve de 3 a 1 en y
   method irArriba(){
     if (position.y()<4){
@@ -54,16 +59,18 @@ object pepitoNivel1 inherits PepitoGeneral(position=game.at(1,2)){
 
 }
 
-object pepitoNivel2 inherits PepitoGeneral(position = game.at(game.width()/2,2)){
+object pepitoNivel2 inherits PepitoGeneral(position = game.at(5,2)){
+
+  override method image() = "newPepito.png"
   
   method irDerecha(){
-    if (position.x()< game.width()/2 + 2){
+    if (position.x()< 7){
       position = position.right(1)
     }
   }
   
   method irIzquierda(){
-    if (position.x()> game.width()/2 - 2){
+    if (position.x()> 3){
       position = position.left(1)
     }
   }

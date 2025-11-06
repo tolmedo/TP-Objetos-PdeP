@@ -6,7 +6,7 @@ import contador.*
 
 
 object instanciadorDeNiveles{
-  var punteroNivelActual = 0
+  var property punteroNivelActual = 0
   method iniciar(nivel){
     if(nivel == 1){
       punteroNivelActual = new PrimerNivel()
@@ -15,9 +15,7 @@ object instanciadorDeNiveles{
     else {
       punteroNivelActual = new SegundoNivel() //Cambiar a nivel 2
       punteroNivelActual.nivel2()
-      
     }
-    
   }
   method perder(){
     punteroNivelActual.perder()
@@ -33,10 +31,11 @@ object instanciadorDeNiveles{
 class NivelGenerico {
   const obstaculos=[]
   const listaTicks=[]
-  var puntos = 0
+  var property puntos = 0
   var nivelActual = 0
   var ultimoSpawn = 3
   const suPepito
+  const velocidadMovimiento = 180
 
   method menu(){
 	  fondo.ponerFondoMenu()
@@ -50,6 +49,7 @@ class NivelGenerico {
   }
 
   method perder(){
+    suPepito.vidasIniciales()
     fondo.ponerFondoGameOver()
     // keyboard.q().onPressDo({ self.menu() })
     keyboard.r().onPressDo({ self.reiniciar() })
@@ -61,12 +61,12 @@ class NivelGenerico {
     game.clear()
     obstaculos.clear()
     self.iniciarInterno()
-    suPepito.vidasIniciales()
+    // suPepito.vidasIniciales()
     suPepito.imagen("newPepito.png")
   }
 
   method aplicarTickAcercar(){
-    game.onTick(125, "acercarObstaculos", {
+    game.onTick(velocidadMovimiento, "acercarObstaculos", {
       obstaculos.forEach({obstaculo => obstaculo.moverse()})
     })
   }
@@ -83,16 +83,6 @@ class NivelGenerico {
   }
 
   method ganar()
-
-  /* override method ganar() {
-      
-      super()
-      if (nivelActual == (nivelFinal-1)){
-      
-        self.terminar()
-      }
-    }
-  */
   
   method terminar(){
     
@@ -123,7 +113,6 @@ class PrimerNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agreg
 
   override method iniciarInterno(){
     if(nivelActual==1){
-      //self.reiniciar()
       self.nivel1()
     }
     /*else{
@@ -134,7 +123,7 @@ class PrimerNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agreg
   }
 
   method nivel1(){
-
+    suPepito.vidasIniciales()
     game.onCollideDo(pepitoNivel1, 
       {elemento => elemento.colisionarCon(pepitoNivel1)}
     )
@@ -153,9 +142,9 @@ class PrimerNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agreg
       var esTos = false
       const numRandom =0.randomUpTo(40)
       if (numRandom<39){
-        if (puntos > 5500){
-         nuevoObstaculo = new VasoDeLeche() //Prueba
-        } else if (puntos > 5000){
+        if (puntos > 5250){
+         nuevoObstaculo = new VasoDeLeche() 
+        } else if (puntos > 4500){
          nuevoObstaculo = new Cuchillo() 
         } else if (numRandom < 5){
           nuevoObstaculo = new TostadoraAbajo()
@@ -186,7 +175,7 @@ class PrimerNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agreg
 
     game.onTick(500, "restarDistancia",{
       if (puntos>0){
-        puntos -= 500
+        puntos -= 5000
         contadorDistancia.puntaje(puntos)
       }
       else{
@@ -196,30 +185,22 @@ class PrimerNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agreg
   
     keyboard.w().onPressDo({pepitoNivel1.irArriba()})
     keyboard.s().onPressDo({pepitoNivel1.irAbajo()})
-	  //game.showAttributes(pepito) //Debug
     
   }
-  /*
-  override method ganar(){
-      fondo.ponerFondoLoading()
-      self.terminar()
-      game.schedule(10000 ,{fondo.ponerFondoNivelDos()})
-      nivelActual = 2
-    }
-  */
+
   override method ganar(){
     nivelActual = 2
     self.reiniciar()
     instanciadorDeNiveles.iniciar(nivelActual)
-    //SegundoNivel.nivel2()
   }
 }
 
-class SegundoNivel inherits NivelGenerico(suPepito=pepitoNivel2){
-  
+class SegundoNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agregarObstaculo"] , suPepito=pepitoNivel2){
+  var veces = 0
+  const velocidadAparicion = 220
+  var rarezaChispita = 42
   override method iniciarInterno(){
     if(nivelActual == 2){
-      //self.reiniciar()
       self.nivel2()
     }else{
       instanciadorDeNiveles.iniciar(false)
@@ -231,32 +212,56 @@ class SegundoNivel inherits NivelGenerico(suPepito=pepitoNivel2){
       self.sacarContadores()
       fondo.ponerFondoGanar()
       self.terminar()
-      nivelActual=1 //Hay que revisar después
-    }
-
-  method sumarAtrapar(){
-    puntos+=1
   }
+  /*
+  method cambiarVelocidad(){
+    velocidadAparicion -= 50
+    velocidadMovimiento -= 40
+  }
+  */
+  method sumarAtrapar() {
+    puntos += 1
+    contadorAtrapados.atrapados(puntos)
+    if(puntos == 10){
+        puntos = 0
+        contadorAtrapados.atrapados(puntos)
+        
+        if (veces == 2){
+          veces=0
+          self.ganar()
+        }else{
+          veces +=1
+          barraVida.cambiarBarra(veces)
+          // self.cambiarVelocidad()
+          rarezaChispita += 2
+        }
+    }
+  }
+
   method nivel2(){
+    fondo.ponerFondoNivelDos()
 
     game.onCollideDo(pepitoNivel2, 
       { elemento => elemento.colisionarCon(pepitoNivel2)}
     )
-
+    
     puntos = 0
+    veces = 0
+    //velocidadAparicion = 250
     contadorAtrapados.atrapados(puntos)
     game.addVisual(contadorAtrapados)
+    
+    game.addVisual(barraVida)
+    barraVida.cambiarBarra(veces)
     self.agregarPrimerosVisuales()
 
-    fondo.ponerFondoNivelDos()
-  
     self.aplicarTickAcercar()
 
-    game.onTick(400, "agregarObstaculo", {
+    game.onTick(velocidadAparicion, "agregarObstaculo", {
       var nuevoObstaculo
-      const numRandom = 0.randomUpTo(40)
-      if (numRandom > 39) nuevoObstaculo = new Chocolate() 
-      else if (numRandom > 36) nuevoObstaculo = new Pepitas()
+      const numRandom = 0.randomUpTo(50)
+      if (numRandom > 49) nuevoObstaculo = new ChocolateVertical() 
+      else if (numRandom > rarezaChispita) nuevoObstaculo = new Chispita()
       else nuevoObstaculo = new Plato()
 
       nuevoObstaculo.position(game.at(self.asignarFilaDiferente(nuevoObstaculo.spawns()), nuevoObstaculo.position().y()))
@@ -266,15 +271,6 @@ class SegundoNivel inherits NivelGenerico(suPepito=pepitoNivel2){
 
     keyboard.d().onPressDo({pepitoNivel2.irDerecha()})
     keyboard.a().onPressDo({pepitoNivel2.irIzquierda()})
-
-    game.onTick(150, "contarAtrapados",{
-      if (puntos<10){
-        contadorAtrapados.atrapados(puntos)
-      }
-      else{
-        self.ganar()
-      }
-    })
 
 }}
 
@@ -314,6 +310,11 @@ class Boss inherits NivelGenerico {
 
   // COMPORTAMIENTO EXCLUSIVO DE LA BOSS FIGHT
 }
+
+IDEA NIVEL 2:
+
+>> En vez de "Pepitas" que caigan pepitas de chocolate. Cada 3 que recolectas Pepito se pone dorado
+y el Monstruo titila. A las tres veces de eso ganas.
 
 */
 

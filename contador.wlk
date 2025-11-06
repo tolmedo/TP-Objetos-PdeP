@@ -7,7 +7,7 @@ object contadorDistancia {
 
 object contVidas{
   var property cantVidas = 3
-  var property position = game.at(game.width(), game.height())
+  var property position = game.at(game.width()-3, game.height()+1)
   method text()= "♥ : "+ cantVidas.toString()
   method textColor()="000000"
 }
@@ -15,6 +15,21 @@ object contVidas{
 object contadorAtrapados {
   var property atrapados = 0
   var property position = game.at(game.width()-3, game.height())
-  method text()= "Pepitas atrapadas: " + atrapados.toString() + "/10"
+  method text()= "Chispitas atrapadas: " + atrapados.toString() + "/10"
   method textColor()="000000"
+}
+
+object barraVida{
+  var property position = game.at(game.width()+2, game.height())
+  var imagen = "barraDeVidaLlena.png"
+  method cambiarBarra(veces){
+    if(veces==0){
+      imagen= "barraDeVidaLlena.png"
+    }else if (veces == 1){
+      imagen = "barraDeVida2.png"
+    } else {
+      imagen = "barraDeVidaFinal.png"
+    }
+  }
+  method image() = imagen
 }

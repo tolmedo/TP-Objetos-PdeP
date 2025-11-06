@@ -1,50 +1,87 @@
 import PepitosSweetRescue.*
 import pepito.*
 import obstaculos.*
+import contador.*
 
 
 describe "Pruebas de la primer parte" {
 
   test "Pepito esta dentro de las posiciones permitidas: ir arriba" {
     
-    pepito.irArriba()
-    pepito.irArriba()
-    pepito.irArriba()
+    pepitoNivel1.irArriba()
+    pepitoNivel1.irArriba()
+    pepitoNivel1.irArriba()
 
-    assert.equals(game.at(1,4),pepito.position()) 
+    assert.equals(game.at(1,4),pepitoNivel1.position()) 
   
   }
 
   test "Pepito esta dentro de las posiciones permitidas: ir abajo" {
     
-    pepito.irAbajo()
-    pepito.irAbajo()
-    pepito.irAbajo()
+    pepitoNivel1.irAbajo()
+    pepitoNivel1.irAbajo()
+    pepitoNivel1.irAbajo()
 
-    assert.equals(game.at(1,2),pepito.position()) 
+    assert.equals(game.at(1,2),pepitoNivel1.position()) 
+  }
+  
+  test "Pepito esta dentro de las posiciones permitidas: ir derecha" { //YOUU SHALL NOT PAAASSSSSS
+    pepitoNivel2.position(game.at(5,2))
+    
+    pepitoNivel2.irDerecha()
+    pepitoNivel2.irDerecha()
+    pepitoNivel2.irDerecha()
+
+    assert.equals(game.at(7,2), pepitoNivel2.position())
   }
 
-  test "La cantidad de vidas cumple con la condicion de perder" {
-  juegoPepitosSweetRescue.iniciar()
-  const obstaculo1 = new ObstaculoHorizontal()
-  pepito.chocarseConObstaculo(obstaculo1)
-  pepito.chocarseConObstaculo(obstaculo1)
-  pepito.chocarseConObstaculo(obstaculo1)
+  test "Pepito esta dentro de las posiciones permitidas: ir izquierda" { //YOUU SHALL NOT PAAASSSSSS
+    pepitoNivel2.position(game.at(5,2))
+    pepitoNivel2.irIzquierda()
+    pepitoNivel2.irIzquierda()
+    pepitoNivel2.irIzquierda()
+    
+    assert.equals(game.at(3,2), pepitoNivel2.position())
+  } 
 
-  assert.equals(0, pepito.getVidas())
-  }
+  test "Colisionar con un cuchillo resta 2 vidas" {
+    const obstaculo = new Cuchillo()
+    pepitoNivel1.chocarseConObstaculo(obstaculo.daño())
+    assert.equals(1, pepitoNivel1.getVidas())
+}
+  
+  test "Colisonar con un chocolate suma una vida" {
+    
+    const vidas = pepitoNivel1.getVidas()
+    const obstaculo1 = new Chocolate()
+    pepitoNivel1.chocarseConObstaculo(obstaculo1.daño())
 
-    test "Una colision resta una vida" {
-    juegoPepitosSweetRescue.iniciar()
-    const obstaculo1 = new ObstaculoHorizontal()
-    pepito.chocarseConObstaculo(obstaculo1)
-
-    // comprobar directamente la propiedad
-    assert.equals(2, pepito.getVidas())
+    assert.equals(vidas + 1, pepitoNivel1.getVidas())
   }
   test "Vidas iniciales son 3" {
-    juegoPepitosSweetRescue.iniciar()
-    assert.equals(3, pepito.getVidas())
+    assert.equals(3, pepitoNivel1.getVidas())
+  }
+  
+  test "Barra de vida baja cuando se obtienen 10 chispitas" { //YOUU SHALL NOT PAAASSSSSS
+    const obstaculo1 = new Chispita()
+    instanciadorDeNiveles.iniciar(2)
+    10.times({ i => 
+        obstaculo1.colisionarCon(pepitoNivel2)
+    })
+    assert.equals("barraDeVida2.png", barraVida.image())
   }
 
+  test "Aumenta el contador de Chispitas cuando se obtiene 1 chispita" { //YOUU SHALL NOT PAAASSSSSS
+    const obstaculo1 = new Chispita()
+    instanciadorDeNiveles.iniciar(2)
+    obstaculo1.colisionarCon(pepitoNivel2)
+    assert.equals(1, contadorAtrapados.atrapados())
+  }
+
+  test "Colisionar con platos resta una vida" {
+    //juegoPepitosSweetRescue.iniciar()
+    const obstaculo1 = new Plato()
+    pepitoNivel2.chocarseConObstaculo(obstaculo1.daño())
+    assert.equals(2, pepitoNivel2.getVidas())
+  }
 }
