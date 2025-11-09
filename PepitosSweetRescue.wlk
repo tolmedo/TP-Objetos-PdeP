@@ -175,7 +175,7 @@ class PrimerNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agreg
 
     game.onTick(500, "restarDistancia",{
       if (puntos>0){
-        puntos -= 5000
+        puntos -= 50
         contadorDistancia.puntaje(puntos)
       }
       else{
