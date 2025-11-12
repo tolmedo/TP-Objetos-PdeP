@@ -135,7 +135,7 @@ class PrimerNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agreg
       {elemento => elemento.colisionarCon(pepitoNivel1)}
     )
 
-    puntos = 5000
+    puntos = 6000
     contadorDistancia.puntaje(puntos)
     fondo.ponerFondoJuego()
 	  self.agregarPrimerosVisuales()
@@ -149,9 +149,9 @@ class PrimerNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agreg
       var esTos = false
       const numRandom =0.randomUpTo(40)
       if (numRandom<39){
-        if (puntos > 4000){
+        if (puntos > 4250){
          nuevoObstaculo = new VasoDeLeche() 
-        } else if (puntos > 3000){
+        } else if (puntos > 3500){
          nuevoObstaculo = new Cuchillo() 
         } else if (numRandom < 5){
           nuevoObstaculo = new TostadoraAbajo()
