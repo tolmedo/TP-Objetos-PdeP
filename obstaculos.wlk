@@ -55,47 +55,30 @@ class Cuchillo inherits ObstaculoHorizontal(daño=2){
 
 class ObstaculoVertical inherits Obstaculo(position = game.at(game.width()/2,game.height())){ // acomodar altura
   override method spawns() = [3,4,5,6,7]
-  
-  override method moverse(){
-    position=position.down(1)
-    if(position.y()<=-3){  // revisar bien donde queda -3, la idea es que esto ocurra cuando llegue al piso
-      instanciadorDeNiveles.sacarA(self)
-      game.removeVisual(self)
-      // ademas para las pepitas agregar que le saquen una vida a pepito cuando tocan piso
-     }
-  }
-}
-/*
-class Pepita inherits ObstaculoVertical(daño=0){
-  override method image() = "pepita.png"
-}
-*/
-class Plato inherits ObstaculoVertical(daño=1){
-  var imagen = "plato.png"
+  var imagen
+  const imagenChoque
   override method image() = imagen
-  
   override method moverse(){
     position=position.down(1)
     
     if(position.y()<=2){
-      imagen="platoRoto.png"
-      game.schedule(400, {
+      imagen = imagenChoque
+      game.schedule(150, {
       instanciadorDeNiveles.sacarA(self) 
       game.removeVisual(self)})
-      
-      // ademas para las pepitas agregar que le saquen una vida a pepito cuando tocan piso
      }
     }
 }
 
-class Chispita inherits ObstaculoVertical{
-  override method image() = "chispita.png"
+class Plato inherits ObstaculoVertical(daño=1, imagen="plato.png", imagenChoque="platoRoto.png"){
+}
+
+class Chispita inherits ObstaculoVertical(imagen="chispita.png", imagenChoque="chispitaAplastada.png"){
   override method colisionarCon(galletita){
     instanciadorDeNiveles.atrapar()
     super(galletita)
   }
 }
 
-class ChocolateVertical inherits ObstaculoVertical(daño=-1){
-  override method image() = "chocolate.png"
+class ChocolateVertical inherits ObstaculoVertical(daño=-1, imagen="chocolate.png", imagenChoque="chocolateAplastado.png"){
 }

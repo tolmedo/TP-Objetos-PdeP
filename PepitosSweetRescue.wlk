@@ -12,20 +12,25 @@ object instanciadorDeNiveles{
       punteroNivelActual = new PrimerNivel()
       punteroNivelActual.menu()
     }
+
     else {
       punteroNivelActual = new SegundoNivel() //Cambiar a nivel 2
       punteroNivelActual.nivel2()
     }
   }
+
   method perder(){
     punteroNivelActual.perder()
   }
+
   method atrapar(){
     punteroNivelActual.sumarAtrapar()
   }
+
   method sacarA(cosaASacar){
     punteroNivelActual.sacarA(cosaASacar)
   }
+
 }
 
 class NivelGenerico {
@@ -123,12 +128,14 @@ class PrimerNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agreg
   }
 
   method nivel1(){
+    
+
     suPepito.vidasIniciales()
     game.onCollideDo(pepitoNivel1, 
       {elemento => elemento.colisionarCon(pepitoNivel1)}
     )
 
-    puntos = 6000
+    puntos = 5000
     contadorDistancia.puntaje(puntos)
     fondo.ponerFondoJuego()
 	  self.agregarPrimerosVisuales()
@@ -136,15 +143,15 @@ class PrimerNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agreg
     
 	  // Cada Tick acercar obstáculos
     self.aplicarTickAcercar()
-
+    
     game.onTick(400, "agregarObstaculo", {
       var nuevoObstaculo
       var esTos = false
       const numRandom =0.randomUpTo(40)
       if (numRandom<39){
-        if (puntos > 5250){
+        if (puntos > 4000){
          nuevoObstaculo = new VasoDeLeche() 
-        } else if (puntos > 4500){
+        } else if (puntos > 3000){
          nuevoObstaculo = new Cuchillo() 
         } else if (numRandom < 5){
           nuevoObstaculo = new TostadoraAbajo()
@@ -185,13 +192,14 @@ class PrimerNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agreg
   
     keyboard.w().onPressDo({pepitoNivel1.irArriba()})
     keyboard.s().onPressDo({pepitoNivel1.irAbajo()})
-    
   }
 
   override method ganar(){
     nivelActual = 2
     self.reiniciar()
-    instanciadorDeNiveles.iniciar(nivelActual)
+    fondo.ponerCinematicaNivel1()
+    game.schedule(50, {game.sound("sh.mp3").play()})
+    game.schedule(5000, {instanciadorDeNiveles.iniciar(nivelActual)})
   }
 }
 
@@ -273,48 +281,3 @@ class SegundoNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agre
     keyboard.a().onPressDo({pepitoNivel2.irIzquierda()})
 
 }}
-
-
-/*
-
-
-class NivelGenerico {
-
-
-  // COMPORTAMIENTO GENÉRICO: iniciar, ganar, perder, terminar, reiniciar, las imagenes
-
-  method spawnPepito() {
-  
-    game.addVisual(pepito)
-  
-  }
-
-}
-
-class Nivel1 inherits NivelGenerico {
-
-  // COMPORTAMIENTO EXCLUSIVO DEL NIVEL CON FILAS
-
-  method moverObstaculo(){}
-}
-
-class Boss inherits NivelGenerico {
-
-  override method spawnPepito() {
-  
-    game.addVisualCharacter(pepito)
-  
-  }
-  
-  method moverObstaculo(){}
-
-  // COMPORTAMIENTO EXCLUSIVO DE LA BOSS FIGHT
-}
-
-IDEA NIVEL 2:
-
->> En vez de "Pepitas" que caigan pepitas de chocolate. Cada 3 que recolectas Pepito se pone dorado
-y el Monstruo titila. A las tres veces de eso ganas.
-
-*/
-

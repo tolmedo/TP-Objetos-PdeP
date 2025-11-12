@@ -8,7 +8,7 @@ object fondo {
     method image() = imagenActual
     
     method ponerFondoLoading() { 
-        imagenActual = "cargando.png"
+        imagenActual = "monstruoCargando.gif"
         self.actualizarFondo()
     }
 
@@ -37,6 +37,11 @@ object fondo {
         self.actualizarFondo()
     }
     
+    method ponerCinematicaNivel1(){
+        imagenActual = "monstruoCargando.gif"
+        self.actualizarFondo()
+    }
+
     method actualizarFondo() {
         game.removeVisual(self)
         game.addVisual(self)

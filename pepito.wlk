@@ -68,12 +68,10 @@ object pepitoNivel2 inherits PepitoGeneral(position = game.at(5,2)){
       position = position.right(1)
     }
   }
-  
+
   method irIzquierda(){
     if (position.x()> 3){
       position = position.left(1)
     }
   }
-
-
 }
