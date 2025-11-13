@@ -22,12 +22,18 @@ class PepitoGeneral{
       if(vidas > 0) {if (daño>0){
         imagen = "pepitoGameOver.png"
         game.schedule(1500, { imagen = "newPepito.png" })
-        // agregar sonido de ugh
+        game.sound("oof.mp3").play()
+        
       }else{
         imagen = "pepitoFeliz.png"
         game.schedule(1500, { imagen = "newPepito.png" })
-        // agregar sondio de ñam ñam
+        if(daño == -1){
+        game.sound("mushroom.mp3").play()
+        }else{
+          game.sound("recoleccion.mp3").play()
+        }
       }
+      
     } else {
       instanciadorDeNiveles.perder()
     } 
@@ -36,9 +42,6 @@ class PepitoGeneral{
     vidas = 3 
     contVidas.cantVidas(vidas) 
   }
-
-  
-
 }
 
 object pepitoNivel1 inherits PepitoGeneral(position=game.at(1,2)){

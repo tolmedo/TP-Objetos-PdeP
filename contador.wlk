@@ -26,9 +26,11 @@ object barraVida{
     if(veces==0){
       imagen= "barraDeVidaLlena.png"
     }else if (veces == 1){
+      game.sound("ugh.mp3").play()
       imagen = "barraDeVida2.png"
     } else {
       imagen = "barraDeVidaFinal.png"
+      game.sound("ugh.mp3").play()
     }
   }
   method image() = imagen

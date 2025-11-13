@@ -7,8 +7,11 @@ import contador.*
 
 object instanciadorDeNiveles{
   var property punteroNivelActual = 0
+  //const musicaFondo = game.sound("musicaFondo.mp3")
+  //var musicaFondoActive = false
   method iniciar(nivel){
     if(nivel == 1){
+      //self.playFondo()
       punteroNivelActual = new PrimerNivel()
       punteroNivelActual.menu()
     }
@@ -18,9 +21,26 @@ object instanciadorDeNiveles{
       punteroNivelActual.nivel2()
     }
   }
+  /*
+  method playFondo(){
+    musicaFondo.play()
+    musicaFondoActive = true
+    game.schedule(50000, { if (musicaFondoActive) self.playFondo() })
+  }
 
+  method stopFondo(){
+    musicaFondoActive = false
+    musicaFondo.stop()
+  }
+
+  method reiniciarFondo(){
+    self.stopFondo()
+    self.playFondo()
+  }
+  */
   method perder(){
     punteroNivelActual.perder()
+    //self.stopFondo()
   }
 
   method atrapar(){
@@ -68,6 +88,7 @@ class NivelGenerico {
     self.iniciarInterno()
     // suPepito.vidasIniciales()
     suPepito.imagen("newPepito.png")
+    // instanciadorDeNiveles.playFondo()
   }
 
   method aplicarTickAcercar(){
@@ -209,7 +230,7 @@ class SegundoNivel inherits NivelGenerico(listaTicks=["acercarObstaculos", "agre
   var rarezaChispita = 42
   override method iniciarInterno(){
     if(nivelActual == 2){
-      self.nivel2()
+      self.nivel2() 
     }else{
       instanciadorDeNiveles.iniciar(false)
       //Agregar autodestrucción
